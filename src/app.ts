@@ -41,3 +41,6 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
 });
 
 export default app;
+
+// 메서드 오버라이드 (PUT, DELETE)
+// npm install method-override 후 사용
