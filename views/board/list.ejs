@@ -1,0 +1,65 @@
+<!-- filename: views/board/list.ejs -->
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+  <h2>게시글 목록</h2>
+  <a href="/boards/new" class="btn btn-primary">새 글 작성</a>
+</div>
+
+<!-- 검색 폼 -->
+<form method="GET" action="/boards" style="margin-bottom: 20px; display: flex; gap: 8px;">
+  <select name="type" class="form-control" style="width: auto;">
+    <option value="title" <%= type === 'title' ? 'selected' : '' %>>제목</option>
+    <option value="content" <%= type === 'content' ? 'selected' : '' %>>내용</option>
+    <option value="author" <%= type === 'author' ? 'selected' : '' %>>작성자</option>
+  </select>
+  <input type="text" name="keyword" value="<%= typeof keyword !== 'undefined' ? keyword : '' %>"
+    placeholder="검색어를 입력하세요" class="form-control" style="flex: 1;">
+  <button type="submit" class="btn btn-secondary">검색</button>
+</form>
+
+<% if (boards.length === 0) { %>
+  <div class="card" style="text-align: center; padding: 40px; color: #6c757d;">
+    <p>게시글이 없습니다.</p>
+  </div>
+<% } else { %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th style="width: 60px;">번호</th>
+        <th>제목</th>
+        <th style="width: 100px;">작성자</th>
+        <th style="width: 80px;">조회수</th>
+        <th style="width: 120px;">작성일</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% boards.forEach((board, index) => { %>
+        <tr>
+          <td><%= pagination.total - (pagination.page - 1) * pagination.limit - index %></td>
+          <td><a href="/boards/<%= board._id %>"><%= board.title %></a></td>
+          <td><%= board.author %></td>
+          <td><%= board.views %></td>
+          <td><%= new Date(board.createdAt).toLocaleDateString('ko-KR') %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+
+  <!-- 페이지네이션 -->
+  <% if (pagination.totalPages > 1) { %>
+    <div class="pagination">
+      <% if (pagination.page > 1) { %>
+        <a href="/boards?page=<%= pagination.page - 1 %><%= keyword ? '&keyword=' + keyword + '&type=' + type : '' %>">이전</a>
+      <% } %>
+      <% for(let i = 1; i <= pagination.totalPages; i++) { %>
+        <% if (i === pagination.page) { %>
+          <span class="active"><%= i %></span>
+        <% } else { %>
+          <a href="/boards?page=<%= i %><%= keyword ? '&keyword=' + keyword + '&type=' + type : '' %>"><%= i %></a>
+        <% } %>
+      <% } %>
+      <% if (pagination.page < pagination.totalPages) { %>
+        <a href="/boards?page=<%= pagination.page + 1 %><%= keyword ? '&keyword=' + keyword + '&type=' + type : '' %>">다음</a>
+      <% } %>
+    </div>
+  <% } %>
+<% } %>

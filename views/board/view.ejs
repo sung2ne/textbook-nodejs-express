@@ -1,0 +1,19 @@
+<!-- filename: views/board/view.ejs -->
+<div class="card">
+  <h2><%= board.title %></h2>
+  <div style="color: #6c757d; margin: 12px 0; font-size: 0.9rem;">
+    작성자: <%= board.author %> | 조회수: <%= board.views %> | 
+    작성일: <%= new Date(board.createdAt).toLocaleDateString('ko-KR') %>
+  </div>
+  <hr style="margin: 16px 0; border-color: #e9ecef;">
+  <div style="white-space: pre-wrap; line-height: 1.8;"><%= board.content %></div>
+</div>
+
+<div style="display: flex; gap: 8px; margin-top: 16px;">
+  <a href="/boards" class="btn btn-secondary">목록으로</a>
+  <a href="/boards/<%= board._id %>/edit" class="btn btn-primary">수정</a>
+  <form method="POST" action="/boards/<%= board._id %>?_method=DELETE" style="display: inline;"
+    onsubmit="return confirm('정말 삭제하시겠습니까?')">
+    <button type="submit" class="btn btn-danger">삭제</button>
+  </form>
+</div>
