@@ -82,3 +82,48 @@ export const store = async (
     next(error);
   }
 };
+
+// 수정 폼
+export const edit = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).render('error/404', { title: '404' });
+    }
+
+    const board = await boardService.findById(id);
+    if (!board) {
+      return res.status(404).render('error/404', { title: '404' });
+    }
+
+    res.render('board/edit', { title: '게시글 수정', board });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// 수정 처리
+export const update = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+    const { title, content } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).render('error/404', { title: '404' });
+    }
+
+    await boardService.update(id, { title, content });
+    res.redirect(`/boards/${id}`);
+  } catch (error) {
+    next(error);
+  }
+};
