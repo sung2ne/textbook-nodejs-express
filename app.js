@@ -1,11 +1,15 @@
 // filename: app.js
 const express = require('express');
+const path = require('path');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
 // 기본 미들웨어
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// 정적 파일 제공
+app.use(express.static(path.join(__dirname, 'public')));
 
 // 커스텀 미들웨어
 const logger = require('./middlewares/logger');
