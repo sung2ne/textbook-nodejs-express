@@ -27,3 +27,23 @@ export const store = async (req: Request, res: Response, next: NextFunction): Pr
     next(error);
   }
 };
+
+// 댓글 목록 조회
+export const index = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { boardId } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(boardId)) {
+      res.status(400).json({ error: '올바르지 않은 게시글 ID입니다.' });
+      return;
+    }
+
+    const comments = await Comment.find({ board: boardId })
+      .populate('author', 'name email')
+      .sort({ createdAt: 1 });
+
+    res.json({ comments });
+  } catch (error) {
+    next(error);
+  }
+};
