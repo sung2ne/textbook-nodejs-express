@@ -1,8 +1,13 @@
 // filename: src/app.ts
 import express, { Application, Request, Response, NextFunction } from 'express';
 import path from 'path';
+import session from 'express-session';
+import flash from 'connect-flash';
 import expressLayouts from 'express-ejs-layouts';
+import './config/passport';
+import passport from 'passport';
 import boardRoutes from './routes/boardRoutes';
+import authRoutes from './routes/authRoutes';
 
 const app: Application = express();
 
@@ -17,14 +22,32 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.locals.siteName = 'Node.js Board';
-app.locals.year = new Date().getFullYear();
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'nodejs-express-secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24
+  }
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+app.use((req: Request, res: Response, next: NextFunction) => {
+  res.locals.currentUser = req.user || null;
+  res.locals.siteName = 'Node.js Board';
+  res.locals.year = new Date().getFullYear();
+  next();
+});
 
 app.get('/', (req: Request, res: Response) => {
   res.render('index', { title: '홈' });
 });
 
 app.use('/boards', boardRoutes);
+app.use('/auth', authRoutes);
 
 app.use((req: Request, res: Response) => {
   res.status(404).render('error/404', { title: '404' });
