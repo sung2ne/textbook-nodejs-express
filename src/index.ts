@@ -2,6 +2,7 @@
 import express, { Application } from 'express';
 import logger from './middlewares/logger';
 import errorHandler from './middlewares/errorHandler';
+import { requireAuth } from './middlewares/auth';
 import usersRouter from './routes/users';
 
 const app: Application = express();
@@ -14,6 +15,11 @@ app.use(logger);
 
 // 라우터
 app.use('/users', usersRouter);
+
+// 보호된 라우트
+app.get('/profile', requireAuth, (req, res) => {
+  res.json(req.user);
+});
 
 // 404 핸들러
 app.use((req, res) => {
