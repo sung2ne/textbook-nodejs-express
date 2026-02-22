@@ -1,10 +1,10 @@
 // filename: src/models/Board.ts
-import { Schema, model, Document, Model } from 'mongoose';
+import { Schema, model, Document, Model, Types } from 'mongoose';
 
 export interface IBoard extends Document {
   title: string;
   content: string;
-  author: string;
+  author: Types.ObjectId;
   views: number;
   createdAt: Date;
   updatedAt: Date;
@@ -30,11 +30,9 @@ const boardSchema = new Schema<IBoard>({
     minlength: [10, '내용은 10자 이상이어야 합니다']
   },
   author: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: 'User',
     required: [true, '작성자는 필수입니다'],
-    minlength: [2, '작성자는 2자 이상이어야 합니다'],
-    maxlength: [20, '작성자는 20자 이하여야 합니다'],
-    trim: true
   },
   views: {
     type: Number,
