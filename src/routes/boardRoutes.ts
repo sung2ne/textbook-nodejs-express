@@ -10,5 +10,6 @@ router.post('/', boardController.store);
 router.get('/:id', boardController.show);
 router.get('/:id/edit', boardController.edit);
 router.put('/:id', boardController.update);
+router.delete('/:id', boardController.destroy);
 
 export default router;

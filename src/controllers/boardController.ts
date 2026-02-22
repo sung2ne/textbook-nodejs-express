@@ -127,3 +127,23 @@ export const update = async (
     next(error);
   }
 };
+
+// 삭제 처리
+export const destroy = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(404).render('error/404', { title: '404' });
+    }
+
+    await boardService.delete(id);
+    res.redirect('/boards');
+  } catch (error) {
+    next(error);
+  }
+};
