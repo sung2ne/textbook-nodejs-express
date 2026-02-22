@@ -7,33 +7,33 @@ import errorHandler from './middlewares/errorHandler';
 const app: Application = express();
 const PORT = process.env.PORT || 3000;
 
-// 뷰 엔진 설정
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '../views'));
-
-// 정적 파일
 app.use(express.static(path.join(__dirname, '../public')));
-
-// 미들웨어
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(logger);
 
-// 전역 데이터
 app.locals.siteName = 'Node.js Board';
 app.locals.year = new Date().getFullYear();
 
-// 라우터
 app.get('/', (req, res) => {
   res.render('index', { title: '홈' });
 });
 
-// 404 핸들러
+app.get('/users', (req, res) => {
+  const users = [
+    { id: 1, name: '홍길동', email: 'hong@example.com' },
+    { id: 2, name: '김철수', email: 'kim@example.com' },
+    { id: 3, name: '박영희', email: 'park@example.com' }
+  ];
+  res.render('users', { title: '사용자 목록', users });
+});
+
 app.use((req, res) => {
   res.status(404).render('index', { title: '404 - 페이지를 찾을 수 없습니다' });
 });
 
-// 에러 핸들러
 app.use(errorHandler);
 
 app.listen(PORT, () => {

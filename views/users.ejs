@@ -1,0 +1,19 @@
+<!-- filename: views/users.ejs -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="container">
+  <h1>사용자 목록</h1>
+  <ul>
+    <% users.forEach(user => { %>
+      <li><%= user.name %> - <%= user.email %></li>
+    <% }) %>
+  </ul>
+</div>
+</body>
+</html>
