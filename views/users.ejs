@@ -1,12 +1,5 @@
 <!-- filename: views/users.ejs -->
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="UTF-8">
-  <title><%= title %></title>
-  <link rel="stylesheet" href="/css/style.css">
-</head>
-<body>
+<%- include('partials/header') %>
 <div class="container">
   <h1>사용자 목록</h1>
   <ul>
@@ -15,5 +8,4 @@
     <% }) %>
   </ul>
 </div>
-</body>
-</html>
+<%- include('partials/footer') %>
