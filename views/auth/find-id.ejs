@@ -1,0 +1,55 @@
+<%- layout('layouts/main') %>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="mb-0">아이디 찾기</h4>
+        </div>
+        <div class="card-body">
+          <% if (locals.error && error) { %>
+            <div class="alert alert-danger"><%= error %></div>
+          <% } %>
+
+          <% if (locals.result && result) { %>
+            <div class="alert alert-success">
+              <p class="mb-1">회원 정보와 일치하는 아이디를 찾았습니다.</p>
+              <strong><%= result %></strong>
+            </div>
+            <div class="d-grid gap-2">
+              <a href="/auth/login" class="btn btn-primary">로그인</a>
+              <a href="/auth/reset-password" class="btn btn-outline-secondary">비밀번호 초기화</a>
+            </div>
+          <% } else { %>
+            <p class="text-muted mb-3">가입 시 등록한 이름과 전화번호로 아이디를 찾습니다.</p>
+
+            <form action="/auth/find-id" method="POST">
+              <div class="mb-3">
+                <label for="name" class="form-label">이름</label>
+                <input type="text" class="form-control" id="name" name="name"
+                  placeholder="홍길동" required>
+              </div>
+
+              <div class="mb-3">
+                <label for="phone" class="form-label">전화번호</label>
+                <input type="text" class="form-control" id="phone" name="phone"
+                  placeholder="010-1234-5678" required>
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" class="btn btn-primary">아이디 찾기</button>
+              </div>
+            </form>
+
+            <hr>
+            <div class="text-center">
+              <a href="/auth/login">로그인</a> |
+              <a href="/auth/reset-password">비밀번호 초기화</a>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

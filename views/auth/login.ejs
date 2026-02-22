@@ -1,0 +1,54 @@
+<%- layout('layouts/main') %>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="mb-0">로그인</h4>
+        </div>
+        <div class="card-body">
+          <% if (locals.error && error.length > 0) { %>
+            <div class="alert alert-danger"><%= error[0] %></div>
+          <% } %>
+          <% if (locals.success && success.length > 0) { %>
+            <div class="alert alert-success"><%= success[0] %></div>
+          <% } %>
+
+          <form action="/auth/login" method="POST">
+            <div class="mb-3">
+              <label for="email" class="form-label">이메일</label>
+              <input type="email" class="form-control" id="email" name="email"
+                placeholder="example@email.com" required autofocus>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">비밀번호</label>
+              <input type="password" class="form-control" id="password" name="password"
+                placeholder="비밀번호를 입력하세요" required>
+            </div>
+
+            <div class="mb-3 form-check">
+              <input type="checkbox" class="form-check-input" id="remember" name="remember">
+              <label class="form-check-label" for="remember">로그인 유지</label>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">로그인</button>
+            </div>
+          </form>
+
+          <hr>
+          <div class="text-center">
+            <a href="/auth/find-id">아이디 찾기</a> |
+            <a href="/auth/reset-password">비밀번호 초기화</a>
+          </div>
+          <hr>
+          <p class="text-center mb-0">
+            계정이 없으신가요? <a href="/auth/register">회원 가입</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

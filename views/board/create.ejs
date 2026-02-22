@@ -1,0 +1,26 @@
+<!-- filename: views/board/create.ejs -->
+<div class="card">
+  <h2 style="margin-bottom: 20px;">게시글 작성</h2>
+
+  <form method="POST" action="/boards" id="boardForm">
+    <div class="form-group">
+      <label for="title">제목</label>
+      <input type="text" id="title" name="title" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <label for="author">작성자</label>
+      <input type="text" id="author" name="author" class="form-control" required>
+    </div>
+
+    <div class="form-group">
+      <label for="content">내용</label>
+      <textarea id="content" name="content" class="form-control" required></textarea>
+    </div>
+
+    <div style="display: flex; gap: 8px;">
+      <button type="submit" class="btn btn-primary">등록</button>
+      <a href="/boards" class="btn btn-secondary">취소</a>
+    </div>
+  </form>
+</div>

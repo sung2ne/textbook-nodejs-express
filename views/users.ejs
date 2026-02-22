@@ -1,0 +1,11 @@
+<!-- filename: views/users.ejs -->
+<%- include('partials/header') %>
+<div class="container">
+  <h1>사용자 목록</h1>
+  <ul>
+    <% users.forEach(user => { %>
+      <li><%= user.name %> - <%= user.email %></li>
+    <% }) %>
+  </ul>
+</div>
+<%- include('partials/footer') %>
