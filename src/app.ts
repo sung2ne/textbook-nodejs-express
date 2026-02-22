@@ -2,12 +2,15 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import path from 'path';
 import session from 'express-session';
+import MongoStore from 'connect-mongo';
 import flash from 'connect-flash';
 import expressLayouts from 'express-ejs-layouts';
 import './config/passport';
 import passport from 'passport';
 import boardRoutes from './routes/boardRoutes';
 import authRoutes from './routes/authRoutes';
+import profileRoutes from './routes/profileRoutes';
+import commentRoutes from './routes/commentRoutes';
 
 const app: Application = express();
 
@@ -26,6 +29,10 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'nodejs-express-secret',
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/nodejs-express',
+    ttl: 60 * 60 * 24,
+  }),
   cookie: {
     maxAge: 1000 * 60 * 60 * 24
   }
@@ -48,6 +55,8 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/boards', boardRoutes);
 app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
+app.use('/comments', commentRoutes);
 
 app.use((req: Request, res: Response) => {
   res.status(404).render('error/404', { title: '404' });

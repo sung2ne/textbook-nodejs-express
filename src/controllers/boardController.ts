@@ -45,6 +45,21 @@ export const create = async (
   }
 };
 
+export const store = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { title, content } = req.body;
+    const authorId = (req.user as any)._id;
+    await boardService.create({ title, content, author: authorId });
+    res.redirect('/boards');
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const show = async (
   req: Request,
   res: Response,
