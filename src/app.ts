@@ -8,6 +8,7 @@ import './config/passport';
 import passport from 'passport';
 import boardRoutes from './routes/boardRoutes';
 import authRoutes from './routes/authRoutes';
+import apiAuthRouter from './routes/api/auth';
 
 const app: Application = express();
 
@@ -48,6 +49,7 @@ app.get('/', (req: Request, res: Response) => {
 
 app.use('/boards', boardRoutes);
 app.use('/auth', authRoutes);
+app.use('/api/auth', apiAuthRouter);
 
 app.use((req: Request, res: Response) => {
   res.status(404).render('error/404', { title: '404' });

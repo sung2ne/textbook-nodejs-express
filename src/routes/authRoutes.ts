@@ -4,7 +4,6 @@ import {
   loginForm, login, logout,
   findIdForm, findId,
   resetPasswordForm, resetPassword,
-  checkEmail,
 } from '../controllers/authController';
 
 const router = Router();
@@ -25,8 +24,5 @@ router.post('/find-id', findId);
 // 비밀번호 초기화
 router.get('/reset-password', resetPasswordForm);
 router.post('/reset-password', resetPassword);
-
-// 이메일 중복 검사
-router.post('/check-email', checkEmail);
 
 export default router;
