@@ -1,0 +1,25 @@
+<!-- filename: views/layouts/main.ejs -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !== 'undefined' ? title + ' - ' + siteName : siteName %></title>
+  <link rel="stylesheet" href="/css/style.css">
+  <%- style %>
+</head>
+<body>
+  <%- include('../partials/header') %>
+
+  <main>
+    <div class="container">
+      <%- body %>
+    </div>
+  </main>
+
+  <%- include('../partials/footer') %>
+
+  <script src="/js/main.js"></script>
+  <%- script %>
+</body>
+</html>
