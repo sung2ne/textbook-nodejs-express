@@ -2,6 +2,7 @@
 import express, { Application, Request, Response, NextFunction } from 'express';
 import path from 'path';
 import session from 'express-session';
+import MongoStore from 'connect-mongo';
 import flash from 'connect-flash';
 import expressLayouts from 'express-ejs-layouts';
 import './config/passport';
@@ -26,6 +27,10 @@ app.use(session({
   secret: process.env.SESSION_SECRET || 'nodejs-express-secret',
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: process.env.MONGO_URI || 'mongodb://localhost:27017/nodejs-express',
+    ttl: 60 * 60 * 24,
+  }),
   cookie: {
     maxAge: 1000 * 60 * 60 * 24
   }
