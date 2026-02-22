@@ -221,3 +221,18 @@ export const resetPassword = async (req: Request, res: Response, next: NextFunct
     next(error);
   }
 };
+
+// 이메일 중복 검사
+export const checkEmail = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      res.status(400).json({ exists: false, message: '이메일이 필요합니다.' });
+      return;
+    }
+    const user = await User.findOne({ email });
+    res.json({ exists: !!user });
+  } catch (error) {
+    next(error);
+  }
+};
