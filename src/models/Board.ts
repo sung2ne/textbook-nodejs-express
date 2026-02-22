@@ -5,6 +5,7 @@ export interface IBoard extends Document {
   title: string;
   content: string;
   author: string;
+  password: string;
   views: number;
   createdAt: Date;
   updatedAt: Date;
@@ -35,6 +36,10 @@ const boardSchema = new Schema<IBoard>({
     minlength: [2, '작성자는 2자 이상이어야 합니다'],
     maxlength: [20, '작성자는 20자 이하여야 합니다'],
     trim: true
+  },
+  password: {
+    type: String,
+    required: [true, '비밀번호는 필수입니다']
   },
   views: {
     type: Number,
