@@ -3,18 +3,16 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// 루트 경로 처리
-app.get('/', (req, res) => {
-  res.send('Hello Express!');
-});
+// JSON 파싱 미들웨어
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-app.get('/about', (req, res) => {
-  res.send('<h1>소개 페이지</h1><p>Express.js를 배우고 있습니다.</p>');
-});
+// 라우터 연결
+const indexRouter = require('./routes/index');
+const usersRouter = require('./routes/users');
 
-app.get('/contact', (req, res) => {
-  res.send('<h1>연락처</h1><p>email@example.com</p>');
-});
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
 
 // 서버 시작
 app.listen(PORT, () => {
