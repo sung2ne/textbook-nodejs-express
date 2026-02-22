@@ -1,0 +1,22 @@
+<!-- filename: views/board/edit.ejs -->
+<div class="card">
+  <h2 style="margin-bottom: 20px;">게시글 수정</h2>
+
+  <form method="POST" action="/boards/<%= board._id %>?_method=PUT">
+    <div class="form-group">
+      <label for="title">제목</label>
+      <input type="text" id="title" name="title" class="form-control"
+        value="<%= board.title %>" required>
+    </div>
+
+    <div class="form-group">
+      <label for="content">내용</label>
+      <textarea id="content" name="content" class="form-control" required><%= board.content %></textarea>
+    </div>
+
+    <div style="display: flex; gap: 8px;">
+      <button type="submit" class="btn btn-primary">수정</button>
+      <a href="/boards/<%= board._id %>" class="btn btn-secondary">취소</a>
+    </div>
+  </form>
+</div>
