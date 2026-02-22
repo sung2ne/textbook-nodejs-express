@@ -67,3 +67,18 @@ export const show = async (
     next(error);
   }
 };
+
+// 등록 처리
+export const store = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { title, content, author } = req.body;
+    await boardService.create({ title, content, author });
+    res.redirect('/boards');
+  } catch (error) {
+    next(error);
+  }
+};
