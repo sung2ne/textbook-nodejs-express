@@ -89,3 +89,40 @@ export const changePassword = async (req: Request, res: Response, next: NextFunc
     next(error);
   }
 };
+
+// 회원 탈퇴 화면
+export const deleteAccountForm = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    res.render('profile/delete-account', { title: '회원 탈퇴', error: null });
+  } catch (error) {
+    next(error);
+  }
+};
+
+// 회원 탈퇴 처리
+export const deleteAccount = async (req: Request, res: Response, next: NextFunction): Promise<void> => {
+  try {
+    const { password } = req.body;
+    const user = await User.findById((req.user as any)._id);
+    if (!user) {
+      res.redirect('/auth/login');
+      return;
+    }
+    const isMatch = await user.comparePassword(password);
+    if (!isMatch) {
+      res.render('profile/delete-account', {
+        title: '회원 탈퇴',
+        error: '비밀번호가 올바르지 않습니다.',
+      });
+      return;
+    }
+    await User.findByIdAndDelete(user._id);
+    req.logout((err) => {
+      if (err) return next(err);
+      req.flash('success', '회원 탈퇴가 완료되었습니다.');
+      res.redirect('/');
+    });
+  } catch (error) {
+    next(error);
+  }
+};
