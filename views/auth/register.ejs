@@ -1,0 +1,68 @@
+<%- layout('layouts/main') %>
+
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="mb-0">회원 가입</h4>
+        </div>
+        <div class="card-body">
+          <% if (locals.errors && errors.length > 0) { %>
+            <div class="alert alert-danger">
+              <ul class="mb-0">
+                <% errors.forEach(function(error) { %>
+                  <li><%= error.msg %></li>
+                <% }) %>
+              </ul>
+            </div>
+          <% } %>
+
+          <form action="/auth/register" method="POST">
+            <div class="mb-3">
+              <label for="name" class="form-label">이름</label>
+              <input type="text" class="form-control" id="name" name="name"
+                value="<%= locals.formData ? formData.name : '' %>"
+                placeholder="홍길동" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="email" class="form-label">이메일</label>
+              <input type="email" class="form-control" id="email" name="email"
+                value="<%= locals.formData ? formData.email : '' %>"
+                placeholder="example@email.com" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="phone" class="form-label">전화번호</label>
+              <input type="text" class="form-control" id="phone" name="phone"
+                value="<%= locals.formData ? formData.phone : '' %>"
+                placeholder="010-1234-5678" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label">비밀번호</label>
+              <input type="password" class="form-control" id="password" name="password"
+                placeholder="6자 이상" required>
+            </div>
+
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label">비밀번호 확인</label>
+              <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                placeholder="비밀번호를 다시 입력하세요" required>
+            </div>
+
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">회원 가입</button>
+            </div>
+          </form>
+
+          <hr>
+          <p class="text-center mb-0">
+            이미 계정이 있으신가요? <a href="/auth/login">로그인</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
