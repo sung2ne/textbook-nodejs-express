@@ -75,7 +75,7 @@ export const loginForm = (req: Request, res: Response) => {
 
 // 로그인 처리 (Passport)
 export const login = (req: Request, res: Response, next: NextFunction) => {
-  passport.authenticate('local', (err: Error, user: any, info: any) => {
+  passport.authenticate('local', (err: Error | null, user: Express.User | false, info: { message?: string }) => {
     if (err) {
       return next(err);
     }
